@@ -1,98 +1,88 @@
 /* Style Switcher */
 .style-switcher {
     position: fixed;
-    right: 0; /* Starts off-screen to the right */
-    top: 60px; /* Adjust vertical position as needed */
+    right: 0;
+    top: 60px;
     padding: 15px;
-    width: 200px; /* Width of the panel */
-    border: 1px solid var(--bg-black-50); /* Border color using CSS variable */
-    background: var(--bg-black-100); /* Background color using CSS variable */
-    z-index: 101; /* High z-index to ensure it's above other content */
+    width: 200px;
+    background: var(--bg-black-100);
+    border: 1px solid var(--bg-black-50);
+    z-index: 101;
     border-radius: 5px;
-    transition: all 0.3s ease; /* Smooth transition for open/close animation */
-    transform: translateX(100%); /* Initially hidden, moved 100% of its width to the right */
+    transition: all 0.3s ease;
+    transform: translateX(100%);
 }
 
-/* State when the style switcher is open (toggled by JavaScript) */
 .style-switcher.open {
-    transform: translateX(0%); /* Moves back to its original position (visible) */
+    transform: translateX(-25px);
 }
 
-/* Common styles for style switcher icons (toggler and day/night) */
 .style-switcher .s-icon {
-    position: absolute; /* Positioned relative to the .style-switcher container */
+    position: absolute;
     height: 40px;
     width: 40px;
     text-align: center;
     font-size: 20px;
-    color: var(--text-black-900); /* Icon color using CSS variable */
-    right: 100%; /* Positions the icon to the left of the .style-switcher panel */
-    margin-right: 25px; /* Spacing between the icon and the panel */
-    background: var(--bg-black-100); /* Background of the icon using CSS variable */
-    border: 1px solid var(--bg-black-50); /* Border of the icon using CSS variable */
-    border-radius: 50%; /* Makes the icon circular */
-    cursor: pointer; /* Indicates it's clickable */
-    transition: all 0.3s ease; /* Smooth transition for icon changes */
+    background: var(--bg-black-100);
+    color: var(--text-black-900);
+    right: 100%;
+    border: 1px solid var(--bg-black-50);
+    margin-right: 25px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-/* Vertical alignment for the Font Awesome icon inside the s-icon div */
-.style-switcher .s-icon i {
-    line-height: 40px; /* Vertically centers the icon text/font */
-}
-
-/* Specific positioning for the main style switcher toggler */
 .style-switcher .style-switcher-toggler {
-    top: 0; /* Aligns with the top of the panel */
+    top: 0;
 }
 
-/* Rotate the cog icon when the switcher is open (visual feedback) */
-.style-switcher .style-switcher-toggler.open i {
-    transform: rotate(360deg);
-}
-
-/* Specific positioning for the day/night mode toggler */
 .style-switcher .day-night {
-    top: 55px; /* Positions it below the main toggler */
+    top: 55px;
 }
 
-/* Heading for Theme Colors */
 .style-switcher h4 {
     margin: 0 0 10px;
-    color: var(--text-black-900); /* Text color using CSS variable */
+    color: var(--text-black-700);
     font-size: 16px;
     font-weight: 600;
     text-transform: capitalize;
 }
 
-/* Container for color options */
 .style-switcher .colors {
-    display: flex; /* Arranges color spans in a row */
-    flex-wrap: wrap; /* Allows color spans to wrap to the next line */
-    justify-content: space-between; /* Distributes space between items */
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
 }
 
-/* Individual color option span */
 .style-switcher .colors span {
-    display: block; /* Ensures each span takes up its own block */
+    display: inline-block;
     height: 30px;
     width: 30px;
-    border-radius: 50%; /* Makes them circular */
-    cursor: pointer; /* Indicates they are clickable */
+    border-radius: 50%;
+    cursor: pointer;
+    margin-bottom: 5px;
 }
 
-/* Specific background colors for each theme option */
-.style-switcher .colors .color-1 {
-    background: #ec1839; /* Red */
+.style-switcher .color-1 {
+    background: #ec1839;
 }
-.style-switcher .colors .color-2 {
-    background: #fa5b0f; /* Coral */
+
+.style-switcher .color-2 {
+    background: #fa5b0f;
 }
-.style-switcher .colors .color-3 {
-    background: #37b187; /* Blue */
+
+.style-switcher .color-3 {
+    background: #37b182;
 }
-.style-switcher .colors .color-4 {
-    background: #1854b4; /* Green */
+
+.style-switcher .color-4 {
+    background: #1854b4;
 }
-.style-switcher .colors .color-5 {
-    background: #f021b2; /* Yellow/Orange */
+
+.style-switcher .color-5 {
+    background: #f021b2;
 }

@@ -17,6 +17,15 @@
     text-decoration: none;
 }
 
+body {
+    font-family: 'Poppins', sans-serif;
+    font-size: 16px;
+    background-color: var(--bg-black-900);
+    color: var(--text-black-900);
+    line-height: 1.5;
+    overflow-x: hidden;
+}
+
 body.dark {
     --bg-black-900: #151515;
     --bg-black-100: #222222;
@@ -27,17 +36,8 @@ body.dark {
     color: #fff;
 }
 
-body {
-    font-family: 'Poppins', sans-serif;
-    font-size: 16px;
-    background-color: var(--bg-black-900);
-    color: var(--text-black-900);
-    line-height: 1.5;
-    /* Removed overflow-x: hidden; to allow natural horizontal scrolling if content overflows */
-}
-
 body.sidebar-open {
-    overflow: hidden; /* Prevents scrolling on body when sidebar is open on mobile */
+    overflow: hidden;
 }
 
 ::before,
@@ -49,7 +49,12 @@ ul {
     list-style: none;
 }
 
-/* Section layout */
+/* Main Layout */
+.main-content {
+    padding-left: 270px;
+    transition: all 0.3s ease;
+}
+
 .section {
     background: var(--bg-black-900);
     min-height: 100vh;
@@ -57,16 +62,36 @@ ul {
     position: relative;
     left: 270px;
     padding: 0 30px;
-    overflow-y: visible;
-    /* Removed overflow-x: hidden; to allow natural horizontal scrolling if content overflows */
+    overflow-y: auto;
     transition: all 0.3s ease;
-    width: 100%;
+    width: calc(100% - 270px);
 }
 
 .section.active {
     display: block;
 }
 
+.container {
+    max-width: 1100px;
+    width: 100%;
+    margin: auto;
+    padding: 60px 0;
+}
+
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    margin-left: -15px;
+    margin-right: -15px;
+    position: relative;
+}
+
+.padd-15 {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Typography */
 .section-title {
     flex: 0 0 100%;
     max-width: 100%;
@@ -80,51 +105,26 @@ ul {
     position: relative;
 }
 
-.section-title h2::before {
-    content: '';
-    height: 4px;
-    width: 50px;
-    background-color: var(--skin-color);
-    position: absolute;
-    top: 100%;
-    left: 0;
-}
-
+.section-title h2::before,
 .section-title h2::after {
     content: '';
     height: 4px;
-    width: 25px;
     background-color: var(--skin-color);
     position: absolute;
     top: 100%;
     left: 0;
+}
+
+.section-title h2::before {
+    width: 50px;
+}
+
+.section-title h2::after {
+    width: 25px;
     margin-top: 8px;
 }
 
-.main-content {
-    padding-left: 270px;
-}
-
-.padd-15 {
-    padding-left: 15px;
-    padding-right: 15px;
-}
-
-.container {
-    max-width: 1100px;
-    width: 100%;
-    margin: auto;
-    padding: 60px 0;
-}
-
-.row {
-    display: flex;
-    flex-wrap: wrap;
-    margin-left: 15px;
-    margin-right: 15px;
-    position: relative;
-}
-
+/* Buttons */
 .btn {
     font-size: 16px;
     font-weight: 500;
@@ -149,7 +149,7 @@ ul {
     box-shadow: 0 0 20px rgba(48, 46, 77, 0.15);
 }
 
-/* Sidebar (Aside) */
+/* Sidebar */
 .aside {
     width: 270px;
     background: var(--bg-black-100);
@@ -184,34 +184,33 @@ ul {
 }
 
 .aside .logo a span {
-    font-family: 'clicker script', cursive;
+    font-family: 'Clicker Script', cursive;
     font-size: 40px;
 }
 
 .aside .logo a::before {
-    border-bottom: 5px solid var(--skin-color);
-    border-left: 5px solid var(--skin-color);
-    bottom: 0;
-    left: 0;
     content: '';
     position: absolute;
     width: 20px;
     height: 20px;
+    bottom: 0;
+    left: 0;
+    border-bottom: 5px solid var(--skin-color);
+    border-left: 5px solid var(--skin-color);
 }
 
 .aside .logo a::after {
-    border-top: 5px solid var(--skin-color);
-    border-right: 5px solid var(--skin-color);
-    top: 0;
-    right: 0;
     content: '';
     position: absolute;
     width: 20px;
     height: 20px;
+    top: 0;
+    right: 0;
+    border-top: 5px solid var(--skin-color);
+    border-right: 5px solid var(--skin-color);
 }
 
 .aside .nav-toggler {
-     /* Hidden by default on large screens */
     position: fixed;
     left: 15px;
     top: 15px;
@@ -222,10 +221,11 @@ ul {
     width: 40px;
     height: 40px;
     border-radius: 50%;
-    display: flex;
+    display: none;
     align-items: center;
     justify-content: center;
     font-size: 20px;
+    transition: all 0.3s ease;
 }
 
 .aside .nav-toggler span {
@@ -253,7 +253,6 @@ ul {
     top: 8px;
 }
 
-
 .aside .nav {
     margin-top: 100px;
     width: 100%;
@@ -279,78 +278,38 @@ ul {
     color: var(--skin-color);
 }
 
-/* Home section */
+/* Home Section */
 .home {
     min-height: 100vh;
     display: flex;
     align-items: center;
     color: var(--text-black-900);
-    flex-wrap: wrap;
 }
 
-.home-info {
+.home .home-info {
     flex: 0 0 60%;
     max-width: 60%;
 }
 
-/* Layout for text and image side by side */
-.home-content {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap; /* allows stacking on mobile */
-  padding: 20px;
-}
-
-/* Text on the left */
-.home-content .text {
-  flex: 1 1 60%;
-  max-width: 60%;
-}
-
-/* Image on the right */
-.home-img {
-  flex: 1 1 40%;
-  max-width: 40%;
-  text-align: center;
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-/* Make the image round */
-.home-img img {
-  width: 300px;
-  height: 300px;
-  border-radius: 50%;
-  object-fit: cover;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-  transform: translateY(10px);
-}
-@media (max-width: 768px) {
-  .home-content {
-    flex-direction: column;
+.home .home-img {
+    flex: 0 0 40%;
+    max-width: 40%;
     text-align: center;
-  }
+    position: relative;
+}
 
-  .home-content .text,
-  .home-img {
-    max-width: 100%;
-    flex: 0 0 100%;
-  }
-
-  .home-img img {
+.home .home-img img {
     width: 220px;
     height: 220px;
-  }
+    border-radius: 50%;
+    object-fit: cover;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    transition: all 0.3s ease;
 }
 
-
-.home-img img:hover {
-  transform: scale(1.03);
+.home .home-img img:hover {
+    transform: scale(1.03);
 }
-
 
 h3.hello {
     font-size: 28px;
@@ -380,13 +339,8 @@ h3.my-profession {
     line-height: 1.8;
 }
 
-/* About section */
+/* About Section */
 .about .about-content {
-    flex: 0 0 100%;
-    max-width: 100%;
-}
-
-.about .about-content .about-text {
     flex: 0 0 100%;
     max-width: 100%;
 }
@@ -437,11 +391,6 @@ h3.my-profession {
 
 .about .about-content .personal-info .buttons {
     margin-top: 30px;
-}
-
-.about .about-content .personal-info .buttons .btn {
-    margin-right: 15px;
-    margin-top: 10px;
 }
 
 .about .about-content .skills {
@@ -574,7 +523,7 @@ h3.my-profession {
     color: var(--text-black-700);
 }
 
-/* Services section */
+/* Service Section */
 .service .container {
     padding-bottom: 40px;
 }
@@ -639,7 +588,7 @@ h3.my-profession {
     line-height: 25px;
 }
 
-/* Portfolio section */
+/* Portfolio Section */
 .portfolio .portfolio-heading {
     flex: 0 0 100%;
     max-width: 100%;
@@ -680,7 +629,7 @@ h3.my-profession {
     transform: scale(1.05);
 }
 
-/* Contact section */
+/* Contact Section */
 .contact-title {
     color: var(--skin-color);
     text-align: center;
@@ -863,79 +812,143 @@ h3.my-profession {
     background: #f021b2;
 }
 
-/* Responsive */
+/* ================== Responsive Media Queries ================== */
+
+/* Large devices (desktops, less than 1200px) */
 @media (max-width: 1199px) {
     .aside {
-        left: -270px; /* Hide sidebar by default on smaller screens */
+        left: -270px;
     }
+    
     .aside.open {
-        left: 0; /* Show sidebar when 'open' class is applied */
+        left: 0;
     }
+    
     .main-content {
-        padding-left: 0; /* Remove padding when sidebar is hidden */
+        padding-left: 0;
     }
-    /* Push main content when sidebar is open */
-    .main-content.active { /* This class should be added via JavaScript */
-        padding-left: 270px;
-    }
-    .about .about-content .personal-info .info-item p span {
-        display: block;
-        margin-left: 0;
-    }
-    .aside .nav-toggler {
-        display: flex; /* Make nav toggler visible */
-        left: 15px; /* Adjust as needed */
-    }
-    .aside .nav-toggler.open {
-        left: 285px; /* Move toggler with open sidebar */
-    }
+    
     .section {
-        left: 0; /* Ensure sections start from the left edge */
+        left: 0;
+        width: 100%;
+    }
+    
+    .aside .nav-toggler {
+        display: flex;
+    }
+    
+    .main-content.active {
+        transform: translateX(270px);
+    }
+    
+    body.sidebar-open {
+        overflow: hidden;
     }
 }
 
+/* Medium devices (tablets, less than 992px) */
 @media (max-width: 991px) {
-    .contact .contact-info-item,
-    .portfolio .portfolio-item,
+    .home .home-info,
+    .home .home-img {
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+    
+    .home .home-img {
+        margin-bottom: 40px;
+    }
+    
+    .about .about-content .personal-info,
+    .about .about-content .skills {
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+    
+    .about .about-content .personal-info .info-item {
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+    
     .service .service-item {
         flex: 0 0 50%;
         max-width: 50%;
     }
-    .home .home-info {
-        flex: 0 0 100%;
-        max-width: 100%;
-        order: 2;
+    
+    .portfolio .portfolio-item {
+        flex: 0 0 50%;
+        max-width: 50%;
     }
-    .home .home-img {
-        flex: 0 0 100%;
-        max-width: 100%;
-        order: 1;
-        margin-bottom: -40px;
+    
+    .contact .contact-info-item {
+        flex: 0 0 50%;
+        max-width: 50%;
     }
 }
 
+/* Small devices (landscape phones, less than 768px) */
 @media (max-width: 767px) {
-    .portfolio .portfolio-item,
-    .contact .contact-form .col-6,
-    .contact .contact-info-item,
-    .service .service-item,
+    .section {
+        padding: 0 15px;
+    }
+    
+    .section-title h2 {
+        font-size: 32px;
+    }
+    
     .about .about-content .education,
-    .about .about-content .experience,
-    .about .about-content .skills,
-    .about .about-content .personal-info {
+    .about .about-content .experience {
         flex: 0 0 100%;
         max-width: 100%;
     }
-    .contact .contact-form .btn {
-        width: 100%;
+    
+    .about .about-content .timeline {
+        padding: 30px 15px;
     }
-    .home-img::before,
-    .home-img::after {
-        display: block;
-    }
-    .home-img img {
-        height: auto;
+    
+    .service .service-item,
+    .portfolio .portfolio-item,
+    .contact .contact-info-item,
+    .contact .contact-form .col-6 {
+        flex: 0 0 100%;
         max-width: 100%;
+    }
+    
+    .home-info p {
+        margin-bottom: 40px;
+    }
+    
+    .btn {
+        width: 100%;
+        margin-bottom: 15px;
+    }
+}
+
+/* Extra small devices (portrait phones, less than 576px) */
+@media (max-width: 575px) {
+    .section-title h2 {
+        font-size: 28px;
+    }
+    
+    h3.hello {
+        font-size: 24px;
+    }
+    
+    h3.my-profession {
+        font-size: 22px;
+    }
+    
+    .home .home-img img {
+        width: 180px;
+        height: 180px;
+    }
+    
+    .about .about-content .timeline .timeline-item {
+        padding-left: 30px;
+    }
+    
+    .about .about-content .timeline .circle-dot {
+        width: 12px;
+        height: 12px;
     }
 }
 
@@ -953,4 +966,55 @@ h3.my-profession {
 
 .fadeIn {
     animation: fadeIn 0.5s ease-in-out;
+}
+/* Ensure nav-toggler is visible on mobile */
+.aside .nav-toggler {
+    display: flex; /* Show the button */
+    position: fixed;
+    left: 15px;
+    top: 15px;
+    z-index: 999; /* Ensure it's above other elements */
+    background: var(--skin-color);
+    color: #fff;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+/* Show only on mobile screens */
+@media (min-width: 1200px) {
+    .aside .nav-toggler {
+        display: none; /* Hide on desktop */
+    }
+}
+
+/* Hamburger icon styling */
+.aside .nav-toggler span {
+    display: block;
+    width: 25px;
+    height: 2px;
+    background: #fff;
+    position: relative;
+}
+
+.aside .nav-toggler span::before,
+.aside .nav-toggler span::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    background: #fff;
+    left: 0;
+}
+
+.aside .nav-toggler span::before {
+    top: -8px;
+}
+
+.aside .nav-toggler span::after {
+    top: 8px;
 }

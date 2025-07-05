@@ -823,6 +823,15 @@ h3.my-profession {
     .aside.open {
         left: 0;
     }
+    body.sidebar-open .aside {
+    left: 0;
+}
+
+body.sidebar-open .main-content,
+body.sidebar-open .section {
+    transform: translateX(270px);
+}
+
     
     .main-content {
         padding-left: 0;
@@ -966,55 +975,4 @@ h3.my-profession {
 
 .fadeIn {
     animation: fadeIn 0.5s ease-in-out;
-}
-/* Ensure nav-toggler is visible on mobile */
-.aside .nav-toggler {
-    display: flex; /* Show the button */
-    position: fixed;
-    left: 15px;
-    top: 15px;
-    z-index: 999; /* Ensure it's above other elements */
-    background: var(--skin-color);
-    color: #fff;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-/* Show only on mobile screens */
-@media (min-width: 1200px) {
-    .aside .nav-toggler {
-        display: none; /* Hide on desktop */
-    }
-}
-
-/* Hamburger icon styling */
-.aside .nav-toggler span {
-    display: block;
-    width: 25px;
-    height: 2px;
-    background: #fff;
-    position: relative;
-}
-
-.aside .nav-toggler span::before,
-.aside .nav-toggler span::after {
-    content: '';
-    position: absolute;
-    width: 100%;
-    height: 2px;
-    background: #fff;
-    left: 0;
-}
-
-.aside .nav-toggler span::before {
-    top: -8px;
-}
-
-.aside .nav-toggler span::after {
-    top: 8px;
 }

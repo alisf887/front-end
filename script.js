@@ -22,6 +22,13 @@ document.addEventListener("DOMContentLoaded", function() {
     const nav = document.querySelector(".nav");
     const mainContent = document.querySelector(".main-content");
     const allSections = document.querySelectorAll(".section");
+    function asideSectionTogglerBtn() {
+    aside.classList.toggle("open");
+    navToggler.classList.toggle("open");
+    mainContent.classList.toggle("active");
+    document.body.classList.toggle("sidebar-open"); // important
+}
+
 
     // Function to toggle sidebar and main content visibility/layout
     function asideSectionTogglerBtn() {
@@ -152,23 +159,7 @@ document.addEventListener("DOMContentLoaded", function() {
         // Default to 'color-1' if no color is saved in local storage
         setActiveStyle("color-1");
     }
-    // In your initSidebarNavigation function
-const toggleSidebar = () => {
-    const aside = document.querySelector(".aside");
-    const navToggler = document.querySelector(".nav-toggler");
     
-    if (aside && navToggler) {
-        aside.classList.toggle("open");
-        navToggler.classList.toggle("open");
-        
-        // Change hamburger to X when open
-        if (aside.classList.contains("open")) {
-            navToggler.innerHTML = '<span class="close-icon">×</span>';
-        } else {
-            navToggler.innerHTML = '<span></span><span></span><span></span>';
-        }
-    }
-};
 
     /* ========================= Day / Night Mode ========================= */
     const dayNight = document.querySelector(".day-night");

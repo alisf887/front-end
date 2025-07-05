@@ -831,6 +831,24 @@ body.sidebar-open .main-content,
 body.sidebar-open .section {
     transform: translateX(270px);
 }
+/* Desktop and larger screens: keep normal layout */
+.home-section {
+  display: flex;
+  flex-direction: row; /* text and image side by side */
+}
+
+/* Mobile screens: stack vertically and show image first */
+@media (max-width: 768px) {
+  .home-section {
+    flex-direction: column; /* stack vertically */
+  }
+  .home-content {
+    order: 2; /* text comes second */
+  }
+  .home-img {
+    order: 1; /* image comes first */
+  }
+}
 
     
     .main-content {

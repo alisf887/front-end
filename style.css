@@ -1,4 +1,5 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+/* ================== Base Styles ================== */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Clicker+Script&display=swap');
 
 :root {
     --bg-black-900: #f2f2fc;
@@ -7,6 +8,7 @@
     --text-black-900: #302e4d;
     --text-black-700: #504e70;
     --skin-color: #ec1839;
+    --vh: 1vh; /* For mobile viewport height fix */
 }
 
 * {
@@ -15,6 +17,12 @@
     box-sizing: border-box;
     outline: none;
     text-decoration: none;
+    -webkit-tap-highlight-color: transparent; /* Remove tap highlight */
+}
+
+html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%; /* Prevent font scaling in landscape */
 }
 
 body {
@@ -24,6 +32,7 @@ body {
     color: var(--text-black-900);
     line-height: 1.5;
     overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
 }
 
 body.dark {
@@ -33,23 +42,15 @@ body.dark {
     --text-black-900: #ffffff;
     --text-black-700: #e9e9e9;
     background-color: #111;
-    color: #fff;
 }
 
 body.sidebar-open {
     overflow: hidden;
+    position: fixed;
+    width: 100%;
 }
 
-::before,
-::after {
-    box-sizing: border-box;
-}
-
-ul {
-    list-style: none;
-}
-
-/* Main Layout */
+/* ================== Layout ================== */
 .main-content {
     padding-left: 270px;
     transition: all 0.3s ease;
@@ -58,6 +59,7 @@ ul {
 .section {
     background: var(--bg-black-900);
     min-height: 100vh;
+    min-height: calc(var(--vh, 1vh) * 100); /* Mobile viewport fix */
     display: block;
     position: relative;
     left: 270px;
@@ -69,6 +71,7 @@ ul {
 
 .section.active {
     display: block;
+    animation: fadeIn 0.5s ease;
 }
 
 .container {
@@ -91,7 +94,7 @@ ul {
     padding-right: 15px;
 }
 
-/* Typography */
+/* ================== Typography ================== */
 .section-title {
     flex: 0 0 100%;
     max-width: 100%;
@@ -124,7 +127,7 @@ ul {
     margin-top: 8px;
 }
 
-/* Buttons */
+/* ================== Buttons ================== */
 .btn {
     font-size: 16px;
     font-weight: 500;
@@ -138,6 +141,10 @@ ul {
     transition: all 0.3s ease;
     cursor: pointer;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    min-height: 44px; /* Better touch target */
+    min-width: 44px;
+    text-align: center;
+    line-height: 1.2;
 }
 
 .btn:hover {
@@ -149,7 +156,7 @@ ul {
     box-shadow: 0 0 20px rgba(48, 46, 77, 0.15);
 }
 
-/* Sidebar */
+/* ================== Sidebar ================== */
 .aside {
     width: 270px;
     background: var(--bg-black-100);
@@ -164,6 +171,8 @@ ul {
     flex-direction: column;
     align-items: center;
     transition: all 0.3s ease;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
 }
 
 .aside .logo {
@@ -218,14 +227,15 @@ ul {
     cursor: pointer;
     background: var(--skin-color);
     color: #fff;
-    width: 40px;
-    height: 40px;
+    width: 44px;
+    height: 44px;
     border-radius: 50%;
     display: none;
     align-items: center;
     justify-content: center;
     font-size: 20px;
     transition: all 0.3s ease;
+    touch-action: manipulation;
 }
 
 .aside .nav-toggler span {
@@ -233,6 +243,7 @@ ul {
     height: 2px;
     background-color: #fff;
     position: relative;
+    transition: all 0.3s ease;
 }
 
 .aside .nav-toggler span::before,
@@ -243,6 +254,7 @@ ul {
     height: 2px;
     background-color: #fff;
     left: 0;
+    transition: all 0.3s ease;
 }
 
 .aside .nav-toggler span::before {
@@ -251,6 +263,20 @@ ul {
 
 .aside .nav-toggler span::after {
     top: 8px;
+}
+
+.aside .nav-toggler.open span {
+    background-color: transparent;
+}
+
+.aside .nav-toggler.open span::before {
+    transform: rotate(45deg);
+    top: 0;
+}
+
+.aside .nav-toggler.open span::after {
+    transform: rotate(-45deg);
+    top: 0;
 }
 
 .aside .nav {
@@ -269,8 +295,16 @@ ul {
     display: block;
     border-bottom: 1px solid var(--bg-black-50);
     color: var(--text-black-900);
-    padding: 8px 15px;
+    padding: 12px 15px;
     transition: all 0.3s ease;
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+}
+
+.aside .nav li a i {
+    margin-right: 10px;
+    font-size: 18px;
 }
 
 .aside .nav li a:hover,
@@ -278,9 +312,10 @@ ul {
     color: var(--skin-color);
 }
 
-/* Home Section */
+/* ================== Home Section ================== */
 .home {
     min-height: 100vh;
+    min-height: calc(var(--vh, 1vh) * 100);
     display: flex;
     align-items: center;
     color: var(--text-black-900);
@@ -305,6 +340,7 @@ ul {
     object-fit: cover;
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
     transition: all 0.3s ease;
+    will-change: transform;
 }
 
 .home .home-img img:hover {
@@ -339,7 +375,7 @@ h3.my-profession {
     line-height: 1.8;
 }
 
-/* About Section */
+/* ================== About Section ================== */
 .about .about-content {
     flex: 0 0 100%;
     max-width: 100%;
@@ -428,6 +464,7 @@ h3.my-profession {
     height: 100%;
     border-radius: 4px;
     background-color: var(--skin-color);
+    will-change: width;
 }
 
 .about .about-content .skills .skill-item .skill-percent {
@@ -523,7 +560,7 @@ h3.my-profession {
     color: var(--text-black-700);
 }
 
-/* Service Section */
+/* ================== Service Section ================== */
 .service .container {
     padding-bottom: 40px;
 }
@@ -542,6 +579,7 @@ h3.my-profession {
     padding: 30px 15px;
     text-align: center;
     transition: all 0.3s ease;
+    will-change: transform;
 }
 
 .service .service-item .service-item-inner:hover {
@@ -588,7 +626,7 @@ h3.my-profession {
     line-height: 25px;
 }
 
-/* Portfolio Section */
+/* ================== Portfolio Section ================== */
 .portfolio .portfolio-heading {
     flex: 0 0 100%;
     max-width: 100%;
@@ -601,9 +639,9 @@ h3.my-profession {
 }
 
 .portfolio .portfolio-item {
+    margin-bottom: 30px;
     flex: 0 0 33.33%;
     max-width: 33.33%;
-    margin-bottom: 30px;
     padding: 0 15px;
 }
 
@@ -613,6 +651,7 @@ h3.my-profession {
     overflow: hidden;
     cursor: pointer;
     transition: all 0.3s ease;
+    will-change: transform;
 }
 
 .portfolio .portfolio-item-inner:hover {
@@ -621,15 +660,17 @@ h3.my-profession {
 
 .portfolio .portfolio-item-inner .portfolio-img img {
     width: 100%;
+    height: auto;
     display: block;
     transition: all 0.3s ease;
+    will-change: transform;
 }
 
 .portfolio .portfolio-item-inner:hover .portfolio-img img {
     transform: scale(1.05);
 }
 
-/* Contact Section */
+/* ================== Contact Section ================== */
 .contact-title {
     color: var(--skin-color);
     text-align: center;
@@ -707,6 +748,7 @@ h3.my-profession {
     font-size: 16px;
     color: var(--text-black-700);
     transition: all 0.3s ease;
+    -webkit-appearance: none;
 }
 
 .contact .contact-form .form-item .form-control:focus {
@@ -723,7 +765,7 @@ h3.my-profession {
     padding: 0 50px;
 }
 
-/* Style Switcher */
+/* ================== Style Switcher ================== */
 .style-switcher {
     position: fixed;
     right: 0;
@@ -823,33 +865,6 @@ h3.my-profession {
     .aside.open {
         left: 0;
     }
-    body.sidebar-open .aside {
-    left: 0;
-}
-
-body.sidebar-open .main-content,
-body.sidebar-open .section {
-    transform: translateX(270px);
-}
-/* Desktop and larger screens: keep normal layout */
-.home-section {
-  display: flex;
-  flex-direction: row; /* text and image side by side */
-}
-
-/* Mobile screens: stack vertically and show image first */
-@media (max-width: 768px) {
-  .home-section {
-    flex-direction: column; /* stack vertically */
-  }
-  .home-content {
-    order: 2; /* text comes second */
-  }
-  .home-img {
-    order: 1; /* image comes first */
-  }
-}
-
     
     .main-content {
         padding-left: 0;
@@ -870,6 +885,8 @@ body.sidebar-open .section {
     
     body.sidebar-open {
         overflow: hidden;
+        position: fixed;
+        width: 100%;
     }
 }
 
@@ -883,6 +900,7 @@ body.sidebar-open .section {
     
     .home .home-img {
         margin-bottom: 40px;
+        order: -1; /* Move image above text */
     }
     
     .about .about-content .personal-info,
@@ -948,6 +966,11 @@ body.sidebar-open .section {
         width: 100%;
         margin-bottom: 15px;
     }
+    
+    /* Fix for iOS form zooming */
+    input, textarea, select {
+        font-size: 16px !important;
+    }
 }
 
 /* Extra small devices (portrait phones, less than 576px) */
@@ -976,6 +999,17 @@ body.sidebar-open .section {
     .about .about-content .timeline .circle-dot {
         width: 12px;
         height: 12px;
+    }
+    
+    /* Style switcher adjustments */
+    .style-switcher {
+        width: 180px;
+        top: 50px;
+    }
+    
+    .style-switcher .s-icon {
+        width: 36px;
+        height: 36px;
     }
 }
 

@@ -1,145 +1,206 @@
 document.addEventListener("DOMContentLoaded", function() {
-    "use strict"; // Enforce stricter parsing and error handling
+    "use strict";
 
-    /* ========================= Typing Animation ========================= */
-    // Ensure the .typing element exists before initializing Typed.js
-    
-    const typingElement = document.querySelector(".typing");
-    if (typingElement) {
-        // Make sure Typed.js library is loaded before this script runs
-        // (i.e., its <script> tag comes before script.js in index.html)
-        var typed = new Typed(".typing", {
-            strings: ["Web Developer", "Front-End Engineer", "Lecturer", "UI/UX Designer"],
-            typeSpeed: 100,
-            backSpeed: 60, // Corrected to 'backSpeed' (lowercase 'b') for Typed.js
-            loop: true
-        });
+    // ================== Mobile Viewport Height Fix ==================
+    function setRealViewportHeight() {
+        let vh = window.innerHeight * 0.01;
+        document.documentElement.style.setProperty('--vh', `${vh}px`);
     }
 
-    /* ========================= Aside (Sidebar) Toggler & Navigation ========================= */
+    // Initialize and update viewport height
+    setRealViewportHeight();
+    window.addEventListener('resize', setRealViewportHeight);
+    window.addEventListener('orientationchange', setRealViewportHeight);
+
+    // ================== Debounce Function for Performance ==================
+    function debounce(func, wait = 100) {
+        let timeout;
+        return function(...args) {
+            clearTimeout(timeout);
+            timeout = setTimeout(() => {
+                func.apply(this, args);
+            }, wait);
+        };
+    }
+
+    // ================== Typing Animation ==================
+    const typingElement = document.querySelector(".typing");
+    if (typingElement && typeof Typed !== 'undefined') {
+        const typedOptions = {
+            strings: ["Web Developer", "Front-End Engineer", "Lecturer", "UI/UX Designer"],
+            typeSpeed: 100,
+            backSpeed: 60,
+            loop: true,
+            // Reduce animation intensity on mobile
+            ...(window.innerWidth < 768 && {
+                typeSpeed: 120,
+                backSpeed: 80
+            })
+        };
+        
+        var typed = new Typed(".typing", typedOptions);
+    }
+
+    // ================== Navigation ==================
     const navToggler = document.querySelector(".nav-toggler");
     const aside = document.querySelector(".aside");
     const nav = document.querySelector(".nav");
     const mainContent = document.querySelector(".main-content");
     const allSections = document.querySelectorAll(".section");
-    function asideSectionTogglerBtn() {
-    aside.classList.toggle("open");
-    navToggler.classList.toggle("open");
-    mainContent.classList.toggle("active");
-    document.body.classList.toggle("sidebar-open"); // important
-}
 
-
-    // Function to toggle sidebar and main content visibility/layout
     function asideSectionTogglerBtn() {
-        if (aside && navToggler && mainContent) {
-            aside.classList.toggle("open");
-            navToggler.classList.toggle("open");
-            // Assuming 'active' class on main-content adjusts its width/margin
-            mainContent.classList.toggle("active"); 
+        aside.classList.toggle("open");
+        navToggler.classList.toggle("open");
+        mainContent.classList.toggle("active");
+        document.body.classList.toggle("sidebar-open");
+        
+        // Lock body scroll when sidebar is open
+        if (aside.classList.contains("open")) {
+            document.body.style.overflow = 'hidden';
+            document.body.style.position = 'fixed';
+            document.body.style.width = '100%';
+        } else {
+            document.body.style.overflow = '';
+            document.body.style.position = '';
+            document.body.style.width = '';
         }
     }
 
-    // Toggle sidebar on nav-toggler click
+    // Add both click and optimized touch events
     if (navToggler) {
-        navToggler.addEventListener("click", () => {
+        navToggler.addEventListener("click", asideSectionTogglerBtn);
+        navToggler.addEventListener("touchend", function(e) {
+            e.preventDefault();
             asideSectionTogglerBtn();
-        });
+        }, { passive: false });
     }
 
-    // Handle navigation clicks
-    if (nav && allSections && aside && navToggler && mainContent) {
+    // Close menu when clicking outside on mobile
+    document.addEventListener('click', function(e) {
+        if (aside.classList.contains('open') && 
+            !e.target.closest('.aside') && 
+            !e.target.closest('.nav-toggler')) {
+            asideSectionTogglerBtn();
+        }
+    });
+
+    // Handle navigation with smooth scrolling
+    if (nav && allSections) {
         nav.querySelectorAll("li a").forEach(link => {
-            link.addEventListener("click", function() {
-                // Deactivate all nav links
+            // Click event
+            link.addEventListener("click", function(e) {
+                e.preventDefault();
+                
+                // Update active nav link
                 nav.querySelectorAll("li a").forEach(navLink => navLink.classList.remove("active"));
-                // Activate the clicked nav link
                 this.classList.add("active");
 
-                // Get target section ID from href (e.g., "#home" -> "home")
-                const targetId = this.getAttribute("href").split("#")[1];
+                const targetId = this.getAttribute("href");
+                const targetElement = document.querySelector(targetId);
+                
+                if (targetElement) {
+                    // Update section visibility
+                    allSections.forEach(section => {
+                        section.classList.remove("active");
+                        section.classList.add("back-section");
+                        
+                        if (section.id === targetId.split("#")[1]) {
+                            section.classList.add("active");
+                            section.classList.remove("back-section");
+                        }
+                    });
 
-                // Update section visibility and "back-section" class for transitions
-                allSections.forEach(section => {
-                    section.classList.remove("active"); // Deactivate all sections
-                    section.classList.add("back-section"); // Add back-section to all for default state
+                    // Smooth scroll with offset for header
+                    const offset = 80;
+                    const elementPosition = targetElement.getBoundingClientRect().top;
+                    const offsetPosition = elementPosition + window.pageYOffset - offset;
 
-                    if (section.id === targetId) {
-                        section.classList.add("active"); // Activate target section
-                        section.classList.remove("back-section"); // Remove back-section from active
-                    }
-                });
+                    window.scrollTo({
+                        top: offsetPosition,
+                        behavior: 'smooth'
+                    });
+                }
 
-                // If sidebar is open (on mobile), close it after clicking a link
+                // Close sidebar if open (mobile)
                 if (aside.classList.contains("open")) {
                     asideSectionTogglerBtn();
                 }
             });
+
+            // Touch event for mobile
+            link.addEventListener('touchend', function(e) {
+                e.preventDefault();
+                this.click();
+            }, { passive: false });
         });
     }
 
-    // Initial section activation on page load (handles direct URL access or refresh)
-    const currentHash = window.location.hash;
-    if (currentHash) {
-        const initialTargetSection = document.querySelector(currentHash);
-        const initialTargetLink = document.querySelector(`.nav li a[href="${currentHash}"]`);
+    // ================== Initial Section Activation ==================
+    function activateInitialSection() {
+        const currentHash = window.location.hash;
+        if (currentHash) {
+            const initialTargetSection = document.querySelector(currentHash);
+            const initialTargetLink = document.querySelector(`.nav li a[href="${currentHash}"]`);
 
-        if (initialTargetSection && initialTargetLink) {
-            // Remove active from any default/initial link/section
-            document.querySelector('.nav li a.active')?.classList.remove('active');
-            document.querySelector('.section.active')?.classList.remove('active');
+            if (initialTargetSection && initialTargetLink) {
+                document.querySelector('.nav li a.active')?.classList.remove('active');
+                document.querySelector('.section.active')?.classList.remove('active');
 
-            // Add active to the one matching the hash
-            initialTargetLink.classList.add('active');
-            initialTargetSection.classList.add('active');
+                initialTargetLink.classList.add('active');
+                initialTargetSection.classList.add('active');
 
-            // Set other sections to back-section for transitions
+                allSections.forEach(section => {
+                    if (section.id !== initialTargetSection.id) {
+                        section.classList.add('back-section');
+                    } else {
+                        section.classList.remove('back-section');
+                    }
+                });
+            }
+        } else {
+            // Default to Home section
+            const homeLink = document.querySelector('.nav li a[href="#home"]');
+            const homeSection = document.getElementById('home');
+            if (homeLink) homeLink.classList.add('active');
+            if (homeSection) homeSection.classList.add('active');
+            
             allSections.forEach(section => {
-                if (section.id !== initialTargetSection.id) {
+                if (section.id !== 'home') {
                     section.classList.add('back-section');
-                } else {
-                    section.classList.remove('back-section'); // Ensure active section doesn't have it
                 }
             });
         }
-    } else {
-        // Default to Home section if no hash is present
-        const homeLink = document.querySelector('.nav li a[href="#home"]');
-        const homeSection = document.getElementById('home');
-        if (homeLink) homeLink.classList.add('active');
-        if (homeSection) homeSection.classList.add('active');
-        
-        // Ensure all other sections start with 'back-section' if home is active by default
-        allSections.forEach(section => {
-            if (section.id !== 'home') {
-                section.classList.add('back-section');
-            }
-        });
     }
 
-    /* ========================= Style Switcher ========================= */
+    activateInitialSection();
+
+    // ================== Style Switcher ==================
     const styleSwitcher = document.querySelector(".style-switcher");
     const styleSwitcherToggler = document.querySelector(".style-switcher-toggler");
 
     if (styleSwitcher && styleSwitcherToggler) {
-        // Toggle style switcher panel open/close
         styleSwitcherToggler.addEventListener("click", () => {
             styleSwitcher.classList.toggle("open");
         });
 
-        // Hide style switcher on scroll (for better user experience)
-        window.addEventListener("scroll", () => {
+        // Add touch support
+        styleSwitcherToggler.addEventListener('touchend', function(e) {
+            e.preventDefault();
+            this.click();
+        }, { passive: false });
+
+        // Hide on scroll with debounce
+        window.addEventListener("scroll", debounce(() => {
             if (styleSwitcher.classList.contains("open")) {
                 styleSwitcher.classList.remove("open");
             }
-        });
+        }));
     }
 
-    /* ========================= Theme Colors ========================= */
+    // ================== Theme Colors ==================
     const alternateStyles = document.querySelectorAll(".alternate-style");
 
-    // Function to set the active color theme based on 'title' attribute
-    window.setActiveStyle = function(color) { // Make it global so onclick works
+    window.setActiveStyle = function(color) {
         alternateStyles.forEach((style) => {
             if (color === style.getAttribute("title")) {
                 style.removeAttribute("disabled");
@@ -147,58 +208,54 @@ document.addEventListener("DOMContentLoaded", function() {
                 style.setAttribute("disabled", "true");
             }
         });
-        // Save selected color to local storage
         localStorage.setItem("color", color);
     };
 
-    // Load saved color from local storage on page load
+    // Load saved color
     const storedColor = localStorage.getItem("color");
     if (storedColor) {
-        setActiveStyle(storedColor); // Apply the saved color
+        setActiveStyle(storedColor);
     } else {
-        // Default to 'color-1' if no color is saved in local storage
         setActiveStyle("color-1");
     }
-    
 
-    /* ========================= Day / Night Mode ========================= */
+    // ================== Day / Night Mode ==================
     const dayNight = document.querySelector(".day-night");
 
     if (dayNight) {
+        // Click handler
         dayNight.addEventListener("click", () => {
             const icon = dayNight.querySelector("i");
-            // Toggle Font Awesome classes for sun/moon icons
             icon.classList.toggle("fa-sun");
             icon.classList.toggle("fa-moon");
-            // Toggle 'dark' class on the body to switch between themes
             document.body.classList.toggle("dark");
-            // Save theme preference to local storage
             localStorage.setItem("theme", document.body.classList.contains("dark") ? "dark" : "light");
         });
-    }
 
-    // Apply saved theme on page load (ensuring dayNight element exists before manipulation)
-    const storedTheme = localStorage.getItem("theme");
-    if (storedTheme) {
-        if (storedTheme === "dark") {
-            document.body.classList.add("dark");
-            if (dayNight) {
+        // Touch support
+        dayNight.addEventListener('touchend', function(e) {
+            e.preventDefault();
+            this.click();
+        }, { passive: false });
+
+        // Apply saved theme
+        const storedTheme = localStorage.getItem("theme");
+        if (storedTheme) {
+            if (storedTheme === "dark") {
+                document.body.classList.add("dark");
                 dayNight.querySelector("i")?.classList.remove("fa-moon");
                 dayNight.querySelector("i")?.classList.add("fa-sun");
-            }
-        } else {
-            document.body.classList.remove("dark");
-            if (dayNight) {
+            } else {
+                document.body.classList.remove("dark");
                 dayNight.querySelector("i")?.classList.remove("fa-sun");
                 dayNight.querySelector("i")?.classList.add("fa-moon");
             }
-        }
-    } else {
-        // Default icon to moon (assuming default theme is light) if no theme saved
-        if (dayNight) {
-             dayNight.querySelector("i")?.classList.remove("fa-sun"); // Ensure no sun icon
-             dayNight.querySelector("i")?.classList.add("fa-moon"); // Default to moon icon
+        } else if (dayNight) {
+            dayNight.querySelector("i")?.classList.remove("fa-sun");
+            dayNight.querySelector("i")?.classList.add("fa-moon");
         }
     }
 
-}); // End of DOMContentLoaded
+    // ================== Passive Event Listeners for Performance ==================
+    document.addEventListener('touchstart', function() {}, { passive: true });
+});

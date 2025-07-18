@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Ali Seid - Personal Portfolio</title>
     <link rel="icon" href="favicon.ico" type="image/x-icon">
-
+    <form name="contact" method="POST" data-netlify="true" action="/thank-you.html">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Clicker+Script&display=swap" rel="stylesheet">
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
@@ -370,42 +370,49 @@
                     <h3 class="contact-title padd-15">SEND ME AN EMAIL</h3>
                     <h4 class="contact-sub-title padd-15">I'M VERY RESPONSIVE TO MESSAGES</h4>
                     <div class="row">
-                        <div class="contact-form padd-15">
-                            <form action="#" method="POST" id="contact-form">
-                                <div class="row">
-                                    <div class="form-item col-6 padd-15">
-                                        <div class="form-group">
-                                            <input type="text" class="form-control" placeholder="Name" required>
-                                        </div>
-                                    </div>
-                                    <div class="form-item col-6 padd-15">
-                                        <div class="form-group">
-                                            <input type="email" class="form-control" placeholder="Email" required>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="form-item col-12 padd-15">
-                                        <div class="form-group">
-                                            <input type="text" class="form-control" placeholder="Subject">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="form-item col-12 padd-15">
-                                        <div class="form-group">
-                                            <textarea name="message" class="form-control" placeholder="Message" required></textarea>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="form-item col-12 padd-15">
-                      <button type="submit" class="btn"><b><h3>Send Message</h3></b></button>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
+                <div class="contact-form padd-15">
+    <form name="contact" method="POST" data-netlify="true" id="contact-form">
+      <!-- Hidden input required by Netlify -->
+      <input type="hidden" name="form-name" value="contact">
+
+      <div class="row">
+        <div class="form-item col-6 padd-15">
+          <div class="form-group">
+            <input type="text" class="form-control" name="name" placeholder="Name" required>
+          </div>
+        </div>
+        <div class="form-item col-6 padd-15">
+          <div class="form-group">
+            <input type="email" class="form-control" name="email" placeholder="Email" required>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="form-item col-12 padd-15">
+          <div class="form-group">
+            <input type="text" class="form-control" name="subject" placeholder="Subject">
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="form-item col-12 padd-15">
+          <div class="form-group">
+            <textarea name="message" class="form-control" placeholder="Message" required></textarea>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="form-item col-12 padd-15">
+          <button type="submit" class="btn"><b><h3>Send Message</h3></b></button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
                 </div>
             </section>
             </div>

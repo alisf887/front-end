@@ -6,7 +6,6 @@ document.addEventListener("DOMContentLoaded", function() {
         let vh = window.innerHeight * 0.01;
         document.documentElement.style.setProperty('--vh', `${vh}px`);
     }
-
     // Initialize and update viewport height
     setRealViewportHeight();
     window.addEventListener('resize', setRealViewportHeight);
@@ -258,4 +257,26 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // ================== Passive Event Listeners for Performance ==================
     document.addEventListener('touchstart', function() {}, { passive: true });
+});
+document.getElementById('contact-form').addEventListener('submit', async function(e) {
+  e.preventDefault();
+  const form = this;
+  const formData = new FormData(form);
+  
+  try {
+    const response = await fetch('/', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams(formData).toString()
+    });
+    
+    if (response.ok) {
+      alert('Message sent successfully!');
+      form.reset();
+    } else {
+      throw new Error('Network response was not ok');
+    }
+  } catch (error) {
+    alert('There was a problem sending your message. Please try again.');
+  }
 });

@@ -34,6 +34,13 @@ body {
     overflow-x: hidden;
     -webkit-font-smoothing: antialiased;
 }
+.hidden {
+  position: absolute;
+  left: -9999px;
+  height: 0;
+  width: 0;
+  overflow: hidden;
+}
 
 body.dark {
     --bg-black-900: #151515;

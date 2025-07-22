@@ -5,13 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Ali Seid - Personal Portfolio</title>
     <link rel="icon" href="favicon.ico" type="image/x-icon">
-    <form name="contact" method="POST" data-netlify="true" ...>
-
     
     <!-- Fonts and Icons -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Clicker+Script&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-    <link rel="stylesheet" href="thank.html">
+    
     <!-- Stylesheets -->
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="style-switcher.css">
@@ -48,9 +46,9 @@
                             <h3 class="hello">Hello, my name is <span class="name">Ali Seid</span></h3>
                             <h3 class="my-profession">I'm a <span class="typing"></span></h3>
                             <p>
-                                I'm Ali Seid, a self-taught <b>Front-End Developer</b> with a
+                                I'm Ali Seid, a self-taught <b>Full-Stack Web Developer</b> with a
                                 <b>BS.c in Applied Physics</b>. I specialize in building responsive, user-friendly web apps using
-                                HTML, CSS, JavaScript, and React. I'm passionate about turning ideas into clean, functional designs —
+                                HTML, CSS, JavaScript, React , C# , ASP.net and Mysql. I'm passionate about turning ideas into clean, functional designs —
                                 always learning, always building.
                             </p>
                             <a href="#about" class="btn hire-me"><b>More about Me</b></a> 
@@ -75,7 +73,7 @@
                                 <div class="about-text padd-15">
                                     <h3>I'm Ali Seid and <span>Web Developer</span></h3>
                                     <p>
-                                        I'm a passionate Front-End Developer with a background in Applied Physics (BSc). I blend science,
+                                        I'm a passionate Full-Stack Web Developer with a background in Applied Physics (BSc). I blend science,
                                         design, and code to build responsive and user-friendly websites. Self-taught, creative, and dedicated
                                         to continuous learning, I aim to grow as a developer and future AI engineer.
                                     </p>
@@ -150,18 +148,20 @@
                                 <div class="education padd-15">
                                     <h3 class="title">Education</h3>
                                     <div class="row">
-                                        <div class="timeline-box padd-15">
-                                            <div class="timeline shadow-dark">
-                                                <div class="timeline-item">
-                                                    <div class="circle-dot"></div>
-                                                    <h3 class="timeline-date">
-                                                        <i class="fa fa-calendar"></i> 2021-2024
-                                                    </h3>
-                                                    <h4 class="timeline-title">BSc in Applied Physics</h4>
-                                                    <p class="timeline-text">
-                                                        Studied core physics principles with a focus on computational methods and applied mathematics.
-                                                    </p>
-                                                </div>
+                <div class="timeline-box padd-15">
+                    <div class="timeline shadow-dark">
+                        <div class="timeline-item">
+                            <div class="circle-dot"></div>
+                            <h3 class="timeline-date">
+                                <i class="fa fa-calendar"></i> 2021-2024
+                            </h3>
+                            <h4 class="timeline-title">BSc in Applied Physics</h4>
+                            <p class="timeline-text">
+                                Studied fundamental physics with a strong focus on quantum mechanics and space physics, 
+                                using computational tools and applied mathematics 
+                                to explore the universe at both quantum and cosmic scales.
+                            </p>
+                        </div>
                                                 <div class="timeline-item">
                                                     <div class="circle-dot"></div>
                                                     <h3 class="timeline-date">
@@ -372,84 +372,72 @@
                     <h3 class="contact-title padd-15">SEND ME AN EMAIL</h3>
                     <h4 class="contact-sub-title padd-15">I'M VERY RESPONSIVE TO MESSAGES</h4>
                     <div class="row">
-                <div class="contact-form padd-15">
-            <!-- Netlify Form Configuration -->
-            <form 
-  name="contact" 
-  method="POST" 
-  data-netlify="true" 
-  netlify-honeypot="bot-field" 
-  id="contact-form"
-  action="/thank-you"
->
-  <input type="hidden" name="form-name" value="contact">
-  <p class="hidden">
-      <label>Don't fill this out if you're human: <input name="bot-field"></label>
-  </p>
+                    <div class="contact-form padd-15">
+                    <!-- EmailJS Form Configuration -->
+        <form id="contact-form">
+        <div class="row">
+            <div class="form-item col-6 padd-15">
+            <div class="form-group">
+                <input 
+                type="text" 
+                id="contact-name" 
+                name="name" 
+                class="form-control" 
+                placeholder="Name" 
+                required
+                >
+            </div>
+            </div>
+            <div class="form-item col-6 padd-15">
+            <div class="form-group">
+                <input 
+                type="email" 
+                id="contact-email" 
+                name="email" 
+                class="form-control" 
+                placeholder="Email" 
+                required
+                >
+            </div>
+            </div>
+        </div>
 
-  <div class="row">
-      <div class="form-item col-6 padd-15">
-          <div class="form-group">
-              <input 
-              type="text" 
-              id="contact-name" 
-              name="name" 
-              class="form-control" 
-              placeholder="Name" 
-              required
-              >
-          </div>
-      </div>
-      <div class="form-item col-6 padd-15">
-          <div class="form-group">
-              <input 
-              type="email" 
-              id="contact-email" 
-              name="email" 
-              class="form-control" 
-              placeholder="Email" 
-              required
-              >
-          </div>
-      </div>
-  </div>
+        <div class="row">
+            <div class="form-item col-12 padd-15">
+            <div class="form-group">
+                <input 
+                type="text" 
+                id="contact-subject" 
+                name="subject" 
+                class="form-control" 
+                placeholder="Subject"
+                >
+            </div>
+            </div>
+        </div>
 
-  <div class="row">
-      <div class="form-item col-12 padd-15">
-          <div class="form-group">
-              <input 
-              type="text" 
-              id="contact-subject" 
-              name="subject" 
-              class="form-control" 
-              placeholder="Subject"
-              >
-          </div>
-      </div>
-  </div>
+        <div class="row">
+            <div class="form-item col-12 padd-15">
+            <div class="form-group">
+                <textarea 
+                id="contact-message" 
+                name="message" 
+                class="form-control" 
+                placeholder="Message" 
+                required
+                ></textarea>
+            </div>
+            </div>
+        </div>
 
-  <div class="row">
-      <div class="form-item col-12 padd-15">
-          <div class="form-group">
-              <textarea 
-              id="contact-message" 
-              name="message" 
-              class="form-control" 
-              placeholder="Message" 
-              required
-              ></textarea>
-          </div>
-      </div>
-  </div>
-
-  <div class="row">
-      <div class="form-item col-12 padd-15">
-          <button type="submit" class="btn">
-              <b><h3>Send Message</h3></b>
-          </button>
-      </div>
-  </div>
-</form>
+        <div class="row">
+            <div class="form-item col-12 padd-15">
+            <button type="submit" class="btn">
+                <b><h3>Send Message</h3></b>
+            </button>
+            </div>
+        </div>
+        </form>
 
         </div>
         </div>
@@ -457,7 +445,7 @@
             </section>
         </div>
     </div>
-
+    
     <div class="style-switcher">
         <div class="s-icon style-switcher-toggler">
             <i class="fas fa-cog fa-spin"></i>
@@ -473,29 +461,29 @@
             <span class="color-4" onclick="setActiveStyle('color-4')"></span>
             <span class="color-5" onclick="setActiveStyle('color-5')"></span>
         </div>
-    </div>
+       </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/typed.js/2.1.0/typed.umd.js"></script>
     <script src="script.js"></script>
 
-    <script> 
-    
-       document.getElementById('contact-form').addEventListener('submit', function(e) {
-        const form = this;
-        const submitBtn = form.querySelector('button[type="submit"]');
-        const originalText = submitBtn.innerHTML;
-        
-        // Show loading state
-        submitBtn.disabled = true;
-        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
-        
-        // Netlify will handle the actual submission
-        // This just provides user feedback
-        setTimeout(function() {
-            submitBtn.disabled = false;
-            submitBtn.innerHTML = originalText;
-        }, 3000);
+        <!-- Include EmailJS SDK -->
+        <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
+        <script>
+        (function() {
+            emailjs.init("rcKLwFOiVMdfTDW2J"); // Replace with your EmailJS public key
+        })();
+
+        document.getElementById("contact-form").addEventListener("submit", function(e) {
+            e.preventDefault();
+
+            emailjs.sendForm("service_ifnquml", "template_km32odg", this)
+            .then(function(response) {
+                alert("Message sent successfully!");
+            }, function(error) {
+                alert("Failed to send message. Please try again.");
+            });
         });
-</script>
+        </script>
+
 </body>
 </html>

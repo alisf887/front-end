@@ -26,7 +26,7 @@ document.addEventListener("DOMContentLoaded", function() {
     const typingElement = document.querySelector(".typing");
     if (typingElement && typeof Typed !== 'undefined') {
         const typedOptions = {
-            strings: ["Web Developer", "Front-End Engineer", "Lecturer", "UI/UX Designer"],
+            strings: ["Full-Stack Web Developer",  "Lecturer", "UI/UX Designer"],
             typeSpeed: 100,
             backSpeed: 60,
             loop: true,
@@ -258,25 +258,15 @@ document.addEventListener("DOMContentLoaded", function() {
     // ================== Passive Event Listeners for Performance ==================
     document.addEventListener('touchstart', function() {}, { passive: true });
 });
-document.getElementById('contact-form').addEventListener('submit', async function(e) {
-  e.preventDefault();
-  const form = this;
-  const formData = new FormData(form);
-  
-  try {
-    const response = await fetch('/', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      body: new URLSearchParams(formData).toString()
-    });
-    
-    if (response.ok) {
-      alert('Message sent successfully!');
-      form.reset();
-    } else {
-      throw new Error('Network response was not ok');
-    }
-  } catch (error) {
-    alert('There was a problem sending your message. Please try again.');
-  }
-});
+function sendmail() {
+    const templateparams = {
+        name: document.querySelector('[name="name"]').value,
+        email: document.querySelector('[name="email"]').value,
+        subject: document.querySelector('[name="subject"]').value,
+        message: document.querySelector('[name="message"]').value,
+    };
+
+    emailjs.send("service_ifnquml", "template_km32odg", templateparams)
+        .then(() => alert("Email sent!!"))
+        .catch(() => alert("Email not sent!!"));
+}
